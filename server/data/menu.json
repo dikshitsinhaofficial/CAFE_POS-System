@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "1762572293224",
+    "name": "Italian pizza",
+    "description": "resh tomato sauce, mozzarella cheese, olive oil, and basil",
+    "category": "Pizza",
+    "basePrice": 280,
+    "sizes": [],
+    "image": "",
+    "isActive": true,
+    "createdAt": "2025-11-08T03:24:53.224Z"
+  },
+  {
+    "_id": "1762572523242",
+    "name": "Uk PIzza",
+    "description": "rich tomato sauce, mozzarella cheese, rich tomato sauce, mozzarella cheese",
+    "category": "Pizza",
+    "basePrice": 240,
+    "sizes": [],
+    "image": "",
+    "isActive": true,
+    "createdAt": "2025-11-08T03:28:43.242Z"
+  }
+]
