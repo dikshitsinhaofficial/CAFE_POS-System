@@ -1,24 +1,302 @@
 [
   {
-    "_id": "1762572293224",
-    "name": "Italian pizza",
-    "description": "resh tomato sauce, mozzarella cheese, olive oil, and basil",
-    "category": "Pizza",
-    "basePrice": 280,
-    "sizes": [],
-    "image": "",
-    "isActive": true,
-    "createdAt": "2025-11-08T03:24:53.224Z"
+    "_id": "ind-01",
+    "name": "Paneer Tikka",
+    "description": "Cottage cheese cubes marinated in yogurt and spices, grilled in tandoor.",
+    "ingredients": "Paneer, Yogurt, Ginger-Garlic Paste, Kashmiri Mirch, Garam Masala",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 320,
+    "isActive": true
   },
   {
-    "_id": "1762572523242",
-    "name": "Uk PIzza",
-    "description": "rich tomato sauce, mozzarella cheese, rich tomato sauce, mozzarella cheese",
-    "category": "Pizza",
+    "_id": "ind-02",
+    "name": "Butter Chicken",
+    "description": "Tender chicken in a rich, creamy tomato-based gravy.",
+    "ingredients": "Chicken, Tomato Puree, Butter, Cream, Kasoori Methi",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 450,
+    "isActive": true
+  },
+  {
+    "_id": "ind-03",
+    "name": "Dal Makhani",
+    "description": "Black lentils slow-cooked overnight with butter and cream.",
+    "ingredients": "Urad Dal, Rajma, Butter, Cream, Tomato Paste",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 280,
+    "isActive": true
+  },
+  {
+    "_id": "ind-04",
+    "name": "Mutton Rogan Josh",
+    "description": "Classic Kashmiri lamb curry cooked with aromatic spices.",
+    "ingredients": "Mutton, Yogurt, Kashmiri Mirch, Fennel Powder, Ginger Powder",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 550,
+    "isActive": true
+  },
+  {
+    "_id": "ind-05",
+    "name": "Palak Paneer",
+    "description": "Fresh spinach puree with cottage cheese cubes.",
+    "ingredients": "Spinach, Paneer, Garlic, Green Chili, Cumin",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 310,
+    "isActive": true
+  },
+  {
+    "_id": "ind-06",
+    "name": "Chicken Biryani",
+    "description": "Fragrant basmati rice layered with spiced chicken and saffron.",
+    "ingredients": "Basmati Rice, Chicken, Saffron, Fried Onions, Mint",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 420,
+    "isActive": true
+  },
+  {
+    "_id": "ind-07",
+    "name": "Chole Bhature",
+    "description": "Spicy chickpeas served with fluffy deep-fried bread.",
+    "ingredients": "Chickpeas, Refined Flour, Pomegranate Powder, Tea Leaves",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 220,
+    "isActive": true
+  },
+  {
+    "_id": "ind-08",
+    "name": "Fish Amritsari",
+    "description": "Deep-fried fish fillets marinated in gram flour and carom seeds.",
+    "ingredients": "Fish Fillets, Besan, Ajwain, Lemon Juice, Ginger-Garlic",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 380,
+    "isActive": true
+  },
+  {
+    "_id": "ind-09",
+    "name": "Malai Kofta",
+    "description": "Fried potato and paneer balls in a rich cashew-based gravy.",
+    "ingredients": "Potato, Paneer, Cashews, Cream, Raisins",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 340,
+    "isActive": true
+  },
+  {
+    "_id": "ind-10",
+    "name": "Tandoori Chicken",
+    "description": "Whole chicken marinated in yogurt and spices, roasted in tandoor.",
+    "ingredients": "Whole Chicken, Yogurt, Lemon, Red Chili, Ginger-Garlic",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 480,
+    "isActive": true
+  },
+  {
+    "_id": "chi-01",
+    "name": "Veg Manchurian",
+    "description": "Vegetable dumplings in a spicy, tangy Indo-Chinese sauce.",
+    "ingredients": "Cabbage, Carrot, Spring Onions, Soy Sauce, Cornflour",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 260,
+    "isActive": true
+  },
+  {
+    "_id": "chi-02",
+    "name": "Kung Pao Chicken",
+    "description": "Spicy stir-fry chicken with peanuts, vegetables, and chili peppers.",
+    "ingredients": "Chicken, Peanuts, Dried Chilies, Bell Peppers, Hoison Sauce",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 390,
+    "isActive": true
+  },
+  {
+    "_id": "chi-03",
+    "name": "Hakka Noodles",
+    "description": "Stir-fried noodles with crisp vegetables and soy sauce.",
+    "ingredients": "Noodles, Cabbage, Carrot, Beans, Soy Sauce, Vinegar",
+    "category": "Chinese",
+    "isVeg": true,
     "basePrice": 240,
-    "sizes": [],
-    "image": "",
-    "isActive": true,
-    "createdAt": "2025-11-08T03:28:43.242Z"
+    "isActive": true
+  },
+  {
+    "_id": "chi-04",
+    "name": "Szechuan Shrimp",
+    "description": "Succulent shrimp tossed in fiery Szechuan pepper sauce.",
+    "ingredients": "Shrimp, Szechuan Peppers, Celery, Chili Paste, Garlic",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 480,
+    "isActive": true
+  },
+  {
+    "_id": "chi-05",
+    "name": "Veg Spring Rolls",
+    "description": "Crispy fried rolls stuffed with seasoned vegetables.",
+    "ingredients": "Spring Roll Sheets, Cabbage, Carrot, Bean Sprouts, Soy",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 180,
+    "isActive": true
+  },
+  {
+    "_id": "chi-06",
+    "name": "Chicken Dim Sum",
+    "description": "Steamed dumplings filled with minced chicken and herbs.",
+    "ingredients": "Minced Chicken, Flour Wrapper, Sesame Oil, Scallions",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 320,
+    "isActive": true
+  },
+  {
+    "_id": "chi-07",
+    "name": "Hot & Sour Soup",
+    "description": "Spicy and tangy soup with mushrooms and bamboo shoots.",
+    "ingredients": "Mushrooms, Bamboo Shoots, Tofu, Vinegar, White Pepper",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 150,
+    "isActive": true
+  },
+  {
+    "_id": "chi-08",
+    "name": "Crispy Chili Beef",
+    "description": "Deep-fried beef strips tossed in a sweet and spicy chili sauce.",
+    "ingredients": "Beef Strips, Cornstarch, Chili Sauce, Bell Peppers, Onion",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 420,
+    "isActive": true
+  },
+  {
+    "_id": "chi-09",
+    "name": "Mapo Tofu",
+    "description": "Soft tofu set in a spicy, oily, and bright red sauce.",
+    "ingredients": "Soft Tofu, Doubanjiang, Chili Oil, Fermented Black Beans",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 290,
+    "isActive": true
+  },
+  {
+    "_id": "chi-10",
+    "name": "Peking Duck",
+    "description": "Classic roast duck served with thin pancakes and hoisin sauce.",
+    "ingredients": "Duck, Hoisin Sauce, Cucumber, Scallions, Pancakes",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 850,
+    "isActive": true
+  },
+  {
+    "_id": "ita-01",
+    "name": "Margherita Pizza",
+    "description": "Classic Neapolitan pizza with tomato, mozzarella, and fresh basil.",
+    "ingredients": "Tomato Sauce, Fresh Mozzarella, Basil, Olive Oil",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 380,
+    "isActive": true
+  },
+  {
+    "_id": "ita-02",
+    "name": "Lasagna Bolognese",
+    "description": "Layered pasta with slow-cooked meat sauce and bechamel.",
+    "ingredients": "Pasta Sheets, Minced Beef, Tomato, Bechamel, Parmesan",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 490,
+    "isActive": true
+  },
+  {
+    "_id": "ita-03",
+    "name": "Spaghetti Carbonara",
+    "description": "Pasta with egg, hard cheese, cured pork, and black pepper.",
+    "ingredients": "Spaghetti, Eggs, Guanciale, Pecorino Romano, Black Pepper",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 440,
+    "isActive": true
+  },
+  {
+    "_id": "ita-04",
+    "name": "Mushroom Risotto",
+    "description": "Creamy Arborio rice cooked with porcini and button mushrooms.",
+    "ingredients": "Arborio Rice, Porcini, Button Mushrooms, Vegetable Broth, Parmesan",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 420,
+    "isActive": true
+  },
+  {
+    "_id": "ita-05",
+    "name": "Chicken Parmigiana",
+    "description": "Breaded chicken breast topped with tomato sauce and mozzarella.",
+    "ingredients": "Chicken Breast, Breadcrumbs, Marinara Sauce, Mozzarella",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 460,
+    "isActive": true
+  },
+  {
+    "_id": "ita-06",
+    "name": "Pasta Primavera",
+    "description": "Pasta with fresh seasonal vegetables and garlic olive oil.",
+    "ingredients": "Penne, Bell Peppers, Zucchini, Broccoli, Garlic, Olive Oil",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 350,
+    "isActive": true
+  },
+  {
+    "_id": "ita-07",
+    "name": "Gnocchi Sorrentina",
+    "description": "Potato gnocchi baked with tomato sauce and fresh mozzarella.",
+    "ingredients": "Potato Gnocchi, Tomato Sauce, Fresh Mozzarella, Basil",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 390,
+    "isActive": true
+  },
+  {
+    "_id": "ita-08",
+    "name": "Osso Buco",
+    "description": "Milanese specialty of veal shanks braised with vegetables.",
+    "ingredients": "Veal Shanks, Carrots, Celery, White Wine, Gremolata",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 650,
+    "isActive": true
+  },
+  {
+    "_id": "ita-09",
+    "name": "Ravioli Spinaci",
+    "description": "Homemade ravioli stuffed with spinach and ricotta in sage butter.",
+    "ingredients": "Flour, Eggs, Spinach, Ricotta, Sage, Butter",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 430,
+    "isActive": true
+  },
+  {
+    "_id": "ita-10",
+    "name": "Seafood Linguine",
+    "description": "Linguine pasta with a variety of fresh Mediterranean seafood.",
+    "ingredients": "Linguine, Mussels, Clams, Prawns, Cherry Tomatoes, Garlic",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 580,
+    "isActive": true
   }
 ]

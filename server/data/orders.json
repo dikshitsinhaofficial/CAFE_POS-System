@@ -64,5 +64,43 @@
     "paymentMode": "cash",
     "status": "completed",
     "orderDate": "2025-11-08T03:28:52.995Z"
+  },
+  {
+    "_id": "1777829739820",
+    "orderNumber": "ORD-0004",
+    "items": [
+      {
+        "id": "ind-01",
+        "menuItemId": "ind-01",
+        "name": "Paneer Tikka",
+        "price": 320,
+        "quantity": 1,
+        "isVeg": true
+      },
+      {
+        "id": "ind-02",
+        "menuItemId": "ind-02",
+        "name": "Butter Chicken",
+        "price": 450,
+        "quantity": 1,
+        "isVeg": false
+      },
+      {
+        "id": "ind-03",
+        "menuItemId": "ind-03",
+        "name": "Dal Makhani",
+        "price": 280,
+        "quantity": 1,
+        "isVeg": true
+      }
+    ],
+    "customer": {
+      "name": "",
+      "mobile": ""
+    },
+    "totalAmount": 0,
+    "paymentMode": "cash",
+    "status": "completed",
+    "orderDate": "2026-05-03T17:35:39.820Z"
   }
 ]
