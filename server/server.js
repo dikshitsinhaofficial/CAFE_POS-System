@@ -128,22 +128,68 @@ app.get('/api/orders', (req, res) => {
 
 // GET: Sales Analytics
 app.get('/api/orders/sales', (req, res) => {
-  const orders = readData(ordersFile);
+  try {
+    const orders = readData(ordersFile);
+    const { startDate, endDate } = req.query;
 
-  const totalSales = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-  const today = new Date().toISOString().slice(0, 10);
-  const dailySales = orders.filter(o => o.orderDate.slice(0, 10) === today)
-    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+    let filteredOrders = orders;
+    if (startDate || endDate) {
+      filteredOrders = orders.filter(o => {
+        const orderDateStr = new Date(o.orderDate).toISOString().slice(0, 10);
+        if (startDate && orderDateStr < startDate) return false;
+        if (endDate && orderDateStr > endDate) return false;
+        return true;
+      });
+    }
 
-  const categorySales = {};
-  orders.forEach(o => {
-    o.items.forEach(i => {
-      if (!categorySales[i.category]) categorySales[i.category] = 0;
-      categorySales[i.category] += i.price * (i.quantity || 1);
+    const dailyMap = {};
+    filteredOrders.forEach(o => {
+      const dateStr = new Date(o.orderDate).toISOString().slice(0, 10);
+      if (!dailyMap[dateStr]) {
+        dailyMap[dateStr] = {
+          orderCount: 0,
+          totalSales: 0
+        };
+      }
+      dailyMap[dateStr].orderCount += 1;
+      dailyMap[dateStr].totalSales += o.totalAmount || 0;
     });
-  });
 
-  res.json({ totalSales, dailySales, categorySales, totalOrders: orders.length });
+    const dailySales = Object.keys(dailyMap).map(date => ({
+      _id: { date },
+      orderCount: dailyMap[date].orderCount,
+      totalSales: dailyMap[date].totalSales,
+      averageOrderValue: dailyMap[date].totalSales / dailyMap[date].orderCount
+    }));
+
+    const itemsMap = {};
+    filteredOrders.forEach(o => {
+      (o.items || []).forEach(i => {
+        const itemName = i.name || 'Unknown';
+        if (!itemsMap[itemName]) {
+          itemsMap[itemName] = {
+            totalQuantity: 0,
+            totalRevenue: 0
+          };
+        }
+        const qty = i.quantity || 1;
+        const price = i.price || 0;
+        itemsMap[itemName].totalQuantity += qty;
+        itemsMap[itemName].totalRevenue += qty * price;
+      });
+    });
+
+    const popularItems = Object.keys(itemsMap).map(name => ({
+      _id: name,
+      totalQuantity: itemsMap[name].totalQuantity,
+      totalRevenue: itemsMap[name].totalRevenue
+    })).sort((a, b) => b.totalQuantity - a.totalQuantity);
+
+    res.json({ dailySales, popularItems });
+  } catch (error) {
+    console.error('Error in sales analytics:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // --------------- SOCKET.IO (Optional) ---------------

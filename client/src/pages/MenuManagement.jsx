@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Leaf, Drumstick, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const MenuManagement = () => {
@@ -8,8 +9,10 @@ const MenuManagement = () => {
   const [newItem, setNewItem] = useState({
     name: '',
     description: '',
-    category: '',
-    basePrice: ''
+    ingredients: '',
+    category: 'Indian',
+    basePrice: '',
+    isVeg: true
   });
   const [loading, setLoading] = useState(false);
 
@@ -43,8 +46,10 @@ const MenuManagement = () => {
       const itemData = {
         name: newItem.name,
         description: newItem.description,
+        ingredients: newItem.ingredients,
         category: newItem.category,
-        basePrice: newItem.basePrice
+        basePrice: newItem.basePrice,
+        isVeg: newItem.isVeg
       };
 
       console.log('Sending to server:', itemData);
@@ -61,8 +66,10 @@ const MenuManagement = () => {
       setNewItem({
         name: '',
         description: '',
-        category: '',
-        basePrice: ''
+        ingredients: '',
+        category: 'Indian',
+        basePrice: '',
+        isVeg: true
       });
       setIsAddingNew(false);
       
@@ -93,27 +100,41 @@ const MenuManagement = () => {
     }
   };
 
+  const categoryOptions = ['Indian', 'Chinese', 'Italian', 'Sweets'];
+
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Menu Management</h1>
-        <button
-          onClick={() => setIsAddingNew(true)}
-          className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all flex items-center space-x-2"
-        >
-          <Plus size={20} />
-          <span>Add New Item</span>
-        </button>
+    <div className="max-w-5xl mx-auto p-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-surface-800 dark:text-white mb-1">Menu Management</h1>
+          <p className="text-sm text-surface-500 dark:text-surface-400">View, add, and manage your restaurant menu items</p>
+        </div>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-4 py-3 bg-surface-100 hover:bg-surface-200 dark:bg-surface-850 dark:hover:bg-surface-800 text-surface-700 dark:text-surface-300 rounded-xl transition-all font-semibold border border-surface-200 dark:border-surface-700 text-sm"
+          >
+            <ArrowLeft size={16} />
+            Back to POS
+          </Link>
+          <button
+            onClick={() => setIsAddingNew(true)}
+            className="flex-1 sm:flex-initial bg-primary-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-primary-700 transition-all flex items-center justify-center space-x-2 shadow-lg shadow-primary-600/30 text-sm"
+          >
+            <Plus size={16} />
+            <span>Add Item</span>
+          </button>
+        </div>
       </div>
 
       {/* Add Form */}
       {isAddingNew && (
-        <div className="bg-white p-6 rounded-xl shadow-lg mb-6 border border-purple-100">
+        <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl shadow-lg mb-6 border border-primary-100 dark:border-surface-800">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold">Add New Menu Item</h3>
+            <h3 className="text-xl font-semibold text-surface-800 dark:text-white">Add New Menu Item</h3>
             <button
               onClick={() => setIsAddingNew(false)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-surface-500 hover:text-surface-700 dark:hover:text-surface-300"
             >
               <X size={24} />
             </button>
@@ -121,45 +142,90 @@ const MenuManagement = () => {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Item Name *</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Item Name *</label>
               <input
                 type="text"
-                placeholder="e.g., Cappuccino"
+                placeholder="e.g., Chicken Biryani"
                 value={newItem.name}
                 onChange={(e) => setNewItem(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 border border-surface-300 dark:border-surface-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-800 dark:text-white outline-none"
               />
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Category *</label>
+                <select
+                  value={newItem.category}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, category: e.target.value }))}
+                  className="w-full p-3 border border-surface-300 dark:border-surface-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-800 dark:text-white outline-none"
+                >
+                  {categoryOptions.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Base Price (₹) *</label>
+                <input
+                  type="number"
+                  placeholder="e.g., 350"
+                  value={newItem.basePrice}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, basePrice: e.target.value }))}
+                  className="w-full p-3 border border-surface-300 dark:border-surface-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-800 dark:text-white outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Dietary Type *</label>
+                <div className="grid grid-cols-2 gap-2 h-[48px]">
+                  <button
+                    type="button"
+                    onClick={() => setNewItem(prev => ({ ...prev, isVeg: true }))}
+                    className={`flex items-center justify-center gap-1.5 rounded-xl border-2 font-semibold text-sm transition-all ${
+                      newItem.isVeg
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                        : 'border-transparent bg-surface-50 dark:bg-surface-800 text-surface-500'
+                    }`}
+                  >
+                    <Leaf size={14} />
+                    Veg
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewItem(prev => ({ ...prev, isVeg: false }))}
+                    className={`flex items-center justify-center gap-1.5 rounded-xl border-2 font-semibold text-sm transition-all ${
+                      !newItem.isVeg
+                        ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+                        : 'border-transparent bg-surface-50 dark:bg-surface-800 text-surface-500'
+                    }`}
+                  >
+                    <Drumstick size={14} />
+                    Non-Veg
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Ingredients</label>
               <input
                 type="text"
-                placeholder="e.g., Coffee, Tea"
-                value={newItem.category}
-                onChange={(e) => setNewItem(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                placeholder="e.g., Basmati Rice, Chicken, Saffron, Fried Onions"
+                value={newItem.ingredients}
+                onChange={(e) => setNewItem(prev => ({ ...prev, ingredients: e.target.value }))}
+                className="w-full p-3 border border-surface-300 dark:border-surface-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-800 dark:text-white outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Base Price (₹) *</label>
-              <input
-                type="number"
-                placeholder="e.g., 180"
-                value={newItem.basePrice}
-                onChange={(e) => setNewItem(prev => ({ ...prev, basePrice: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Description</label>
               <textarea
                 placeholder="Describe the item..."
                 value={newItem.description}
                 onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 border border-surface-300 dark:border-surface-700 rounded-xl focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-800 dark:text-white outline-none"
                 rows="2"
               />
             </div>
@@ -168,7 +234,7 @@ const MenuManagement = () => {
           <button
             onClick={handleAddItem}
             disabled={loading}
-            className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 transition-all flex items-center space-x-2"
+            className="mt-6 bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 disabled:opacity-50 transition-all flex items-center space-x-2 shadow-lg"
           >
             <Save size={20} />
             <span>{loading ? 'Adding...' : 'Add Item'}</span>
@@ -178,12 +244,12 @@ const MenuManagement = () => {
 
       {/* Menu Items */}
       {menuItems.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-xl shadow-lg">
-          <h3 className="text-xl font-semibold text-gray-600 mb-4">No Menu Items Yet</h3>
-          <p className="text-gray-500 mb-6">Add your first menu item to get started</p>
+        <div className="text-center py-12 bg-white dark:bg-surface-900 rounded-2xl shadow-lg">
+          <h3 className="text-xl font-semibold text-surface-600 dark:text-surface-300 mb-4">No Menu Items Yet</h3>
+          <p className="text-surface-500 mb-6">Add your first menu item to get started</p>
           <button
             onClick={() => setIsAddingNew(true)}
-            className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700"
+            className="bg-primary-600 text-white px-6 py-3 rounded-xl hover:bg-primary-700 shadow-lg"
           >
             Add First Item
           </button>
@@ -191,22 +257,30 @@ const MenuManagement = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {menuItems.map(item => (
-            <div key={item._id} className="bg-white rounded-xl shadow-lg p-4 border border-purple-100">
+            <div key={item._id} className="bg-white dark:bg-surface-900 rounded-2xl shadow-sm p-4 border border-surface-100 dark:border-surface-800 hover:shadow-lg transition-all">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
-                <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
+                <div className="flex items-center gap-2">
+                  <div className={`p-1 rounded-md border ${item.isVeg ? 'border-green-500' : 'border-red-500'}`}>
+                    <div className={`w-2 h-2 rounded-full ${item.isVeg ? 'bg-green-500' : 'bg-red-500'}`} />
+                  </div>
+                  <h3 className="font-semibold text-lg text-surface-800 dark:text-white">{item.name}</h3>
+                </div>
+                <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 text-xs px-2 py-1 rounded-full">
                   {item.category}
                 </span>
               </div>
-              <p className="text-gray-600 text-sm mb-3">{item.description}</p>
+              <p className="text-surface-600 dark:text-surface-400 text-sm mb-1">{item.description}</p>
+              {item.ingredients && (
+                <p className="text-surface-400 text-xs italic mb-3">{item.ingredients}</p>
+              )}
               
-              <div className="flex justify-between items-center">
-                <span className="text-purple-600 font-bold text-lg">
+              <div className="flex justify-between items-center pt-2 border-t border-surface-100 dark:border-surface-800">
+                <span className="text-primary-600 dark:text-primary-400 font-bold text-lg">
                   ₹{item.basePrice?.toFixed(0)}
                 </span>
                 <button
                   onClick={() => handleDeleteItem(item._id)}
-                  className="bg-red-600 text-white py-2 px-3 rounded-lg hover:bg-red-700 transition-all flex items-center space-x-1"
+                  className="bg-red-600 text-white py-2 px-3 rounded-xl hover:bg-red-700 transition-all flex items-center space-x-1"
                 >
                   <Trash2 size={16} />
                   <span>Delete</span>

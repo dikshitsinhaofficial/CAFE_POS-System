@@ -8,13 +8,11 @@ import Layout from './components/Layout';
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<POS />} />
-          <Route path="/menu" element={<MenuManagement />} />
-          <Route path="/sales" element={<SalesAnalytics />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<Layout><POS /></Layout>} />
+        <Route path="/menu" element={<MenuManagement />} />
+        <Route path="/sales" element={<SalesAnalytics />} />
+      </Routes>
     </Router>
   );
 }

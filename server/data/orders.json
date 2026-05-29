@@ -102,5 +102,32 @@
     "paymentMode": "cash",
     "status": "completed",
     "orderDate": "2026-05-03T17:35:39.820Z"
+  },
+  {
+    "_id": "1780075662741",
+    "orderNumber": "ORD-0005",
+    "items": [
+      {
+        "id": "ind-01",
+        "menuItemId": "ind-01",
+        "name": "Paneer Tikka",
+        "price": 180,
+        "quantity": 2,
+        "isVeg": true,
+        "image": "https://images.unsplash.com/photo-1567188040759-fb8a883db6d8?w=500&auto=format&fit=crop&q=60"
+      }
+    ],
+    "customer": {
+      "name": "pushkar thakur",
+      "mobile": "9955718855",
+      "address": "landran"
+    },
+    "totalAmount": 418,
+    "subtotal": 360,
+    "tax": 18,
+    "paymentType": "cod",
+    "serviceType": "dine-in",
+    "status": "completed",
+    "orderDate": "2026-05-29T17:27:42.741Z"
   }
 ]

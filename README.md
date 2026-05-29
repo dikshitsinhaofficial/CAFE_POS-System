@@ -1,6 +1,6 @@
-# ☕ Cafe POS System – Smart Restaurant Management
+# 🍛 Desi Cafe – Smart Restaurant POS System
 
-A modern **Cafe Point of Sale (POS) System** built to streamline restaurant operations with digital menus, billing, and real-time analytics.
+A modern **Desi Cafe Point of Sale (POS) System** built to streamline restaurant operations with digital menus, billing, and real-time analytics.
 
 🌐 **Live Demo:**
 https://cafe-pos-by-dikshitsinha.vercel.app/
@@ -9,7 +9,7 @@ https://cafe-pos-by-dikshitsinha.vercel.app/
 
 ## 📌 Overview
 
-Cafe POS System is a complete web-based solution designed for cafés and restaurants to manage orders, billing, and customer interactions efficiently.
+Desi Cafe POS System is a complete web-based solution designed for cafés and restaurants to manage orders, billing, and customer interactions efficiently.
 
 It replaces traditional manual workflows with a **fast, digital, and user-friendly interface**, improving both customer experience and operational efficiency.
 
@@ -23,25 +23,26 @@ It replaces traditional manual workflows with a **fast, digital, and user-friend
   * Automatic total calculation
   * Invoice generation
 
-* 📱 **QR Code Menu**
+* 🍽️ **Multi-Cuisine Menu**
 
-  * Customers can scan and view menu
-  * Contactless ordering experience
+  * Indian, Italian, Chinese & Sweets
+  * Veg & Non-Veg filters
+  * Smart search across all items
 
-* 🍽️ **Order Management**
+* 💳 **Flexible Payments**
 
-  * Add/remove items dynamically
-  * Real-time cart updates
+  * Razorpay Online (UPI, Cards, Net Banking)
+  * Cash on Delivery (COD)
+
+* 🔍 **Smart Search**
+
+  * Search by dish name, ingredients, or cuisine
+  * Real-time filtering with instant results
 
 * 📊 **Analytics Dashboard**
 
   * Track sales performance
   * Monitor revenue trends
-
-* 👨‍🍳 **Kitchen Display System (KDS)**
-
-  * Orders sent directly to kitchen
-  * Improves workflow efficiency
 
 * ⚡ **Responsive UI**
 
@@ -51,8 +52,9 @@ It replaces traditional manual workflows with a **fast, digital, and user-friend
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** HTML, CSS, JavaScript
-* **UI Design:** Modern responsive layout
+* **Frontend:** React, Vite, TailwindCSS
+* **Backend:** Node.js, Express
+* **UI Design:** Modern responsive layout with dark mode
 * **Deployment:** Vercel
 
 ---
@@ -61,13 +63,17 @@ It replaces traditional manual workflows with a **fast, digital, and user-friend
 
 ```bash
 Cafe-POS/
-│── index.html
-│── css/
-│   └── style.css
-│── js/
-│   └── script.js
-│── assets/
-│   └── images
+│── client/          # React frontend (Vite)
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── ...
+│── server/          # Express backend
+│   ├── data/        # JSON data files
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   └── server.js
 ```
 
 ---
@@ -77,15 +83,23 @@ Cafe-POS/
 Clone the repository:
 
 ```bash
-git clone https://github.com/dikshitsinhaofficial/Desi-Cart.git
-cd Desi-Cart
+git clone https://github.com/dikshitsinhaofficial/CAFE_POS-System.git
+cd CAFE_POS-System
 ```
 
-Run locally:
+Install dependencies & run:
 
-* Open `index.html` in browser
-  OR
-* Use Live Server in VS Code
+```bash
+# Server
+cd server
+npm install
+node server.js
+
+# Client (new terminal)
+cd client
+npm install
+npm run dev
+```
 
 ---
 
@@ -99,17 +113,11 @@ vercel --prod
 
 ---
 
-## 📸 Screenshots
-
-*(Add screenshots here for better presentation)*
-
----
-
 ## 📈 Future Improvements
 
 * 🔐 User authentication (Admin / Staff login)
-* 💳 Payment integration (UPI, Stripe, Razorpay)
-* 📦 Backend (Node.js + MongoDB)
+* 💳 Full Razorpay payment gateway integration
+* 📦 MongoDB database
 * 📊 Advanced analytics dashboard
 * 🧠 AI-based sales insights
 
