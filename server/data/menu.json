@@ -7,6 +7,7 @@
     "category": "Indian",
     "isVeg": true,
     "basePrice": 320,
+    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883db6d8?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -17,6 +18,7 @@
     "category": "Indian",
     "isVeg": false,
     "basePrice": 450,
+    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -27,6 +29,7 @@
     "category": "Indian",
     "isVeg": true,
     "basePrice": 280,
+    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -37,6 +40,7 @@
     "category": "Indian",
     "isVeg": false,
     "basePrice": 550,
+    "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -47,6 +51,7 @@
     "category": "Indian",
     "isVeg": true,
     "basePrice": 310,
+    "image": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -57,6 +62,7 @@
     "category": "Indian",
     "isVeg": false,
     "basePrice": 420,
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -67,6 +73,7 @@
     "category": "Indian",
     "isVeg": true,
     "basePrice": 220,
+    "image": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -77,6 +84,7 @@
     "category": "Indian",
     "isVeg": false,
     "basePrice": 380,
+    "image": "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -87,6 +95,7 @@
     "category": "Indian",
     "isVeg": true,
     "basePrice": 340,
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -97,6 +106,117 @@
     "category": "Indian",
     "isVeg": false,
     "basePrice": 480,
+    "image": "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-11",
+    "name": "Mutton Biryani",
+    "description": "Slow-cooked mutton layered with aromatic basmati rice and whole spices.",
+    "ingredients": "Basmati Rice, Mutton, Saffron, Fried Onions, Whole Spices, Mint",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 520,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-12",
+    "name": "Veg Biryani",
+    "description": "Fragrant basmati rice cooked with seasonal vegetables and rich spices.",
+    "ingredients": "Basmati Rice, Mixed Vegetables, Saffron, Fried Onions, Ghee",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 320,
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-13",
+    "name": "Hyderabadi Dum Biryani",
+    "description": "Authentic Hyderabadi dum biryani with succulent chicken and aromatic spices.",
+    "ingredients": "Basmati Rice, Chicken, Yogurt, Saffron, Green Chili, Mint",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 460,
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-14",
+    "name": "Lucknowi Mutton Biryani",
+    "description": "Light and fragrant Awadhi-style biryani with tender meat and subtle spices.",
+    "ingredients": "Basmati Rice, Mutton, Rose Water, Kewra, Star Anise, Saffron",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 540,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-15",
+    "name": "Egg Biryani",
+    "description": "Flavorful basmati rice with boiled eggs and aromatic masala gravy.",
+    "ingredients": "Basmati Rice, Eggs, Onions, Tomatoes, Biryani Masala, Mint",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 300,
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-16",
+    "name": "Paneer Biryani",
+    "description": "Rich and aromatic biryani loaded with marinated paneer cubes.",
+    "ingredients": "Basmati Rice, Paneer, Yogurt, Saffron, Fried Onions, Cashews",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 350,
+    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883db6d8?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-17",
+    "name": "Prawn Biryani",
+    "description": "Coastal-style spicy biryani with juicy prawns and coconut milk.",
+    "ingredients": "Basmati Rice, Prawns, Coconut Milk, Curry Leaves, Green Chili",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 580,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-18",
+    "name": "Aloo Gobi",
+    "description": "Classic dry curry of potatoes and cauliflower with turmeric and cumin.",
+    "ingredients": "Potato, Cauliflower, Turmeric, Cumin Seeds, Green Chili",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 220,
+    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-19",
+    "name": "Chicken Tikka Masala",
+    "description": "Grilled chicken tikka pieces simmered in a creamy spiced tomato sauce.",
+    "ingredients": "Chicken Tikka, Tomato, Cream, Garam Masala, Kasuri Methi",
+    "category": "Indian",
+    "isVeg": false,
+    "basePrice": 430,
+    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ind-20",
+    "name": "Paneer Butter Masala",
+    "description": "Soft paneer cubes in a luscious butter tomato gravy.",
+    "ingredients": "Paneer, Butter, Tomato Puree, Cream, Cashew Paste",
+    "category": "Indian",
+    "isVeg": true,
+    "basePrice": 350,
+    "image": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -107,16 +227,18 @@
     "category": "Chinese",
     "isVeg": true,
     "basePrice": 260,
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
     "_id": "chi-02",
     "name": "Kung Pao Chicken",
     "description": "Spicy stir-fry chicken with peanuts, vegetables, and chili peppers.",
-    "ingredients": "Chicken, Peanuts, Dried Chilies, Bell Peppers, Hoison Sauce",
+    "ingredients": "Chicken, Peanuts, Dried Chilies, Bell Peppers, Hoisin Sauce",
     "category": "Chinese",
     "isVeg": false,
     "basePrice": 390,
+    "image": "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -127,6 +249,7 @@
     "category": "Chinese",
     "isVeg": true,
     "basePrice": 240,
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -137,6 +260,7 @@
     "category": "Chinese",
     "isVeg": false,
     "basePrice": 480,
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -147,6 +271,7 @@
     "category": "Chinese",
     "isVeg": true,
     "basePrice": 180,
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -157,6 +282,7 @@
     "category": "Chinese",
     "isVeg": false,
     "basePrice": 320,
+    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -167,6 +293,7 @@
     "category": "Chinese",
     "isVeg": true,
     "basePrice": 150,
+    "image": "https://images.unsplash.com/photo-1547592180-85f173990554?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -177,6 +304,7 @@
     "category": "Chinese",
     "isVeg": false,
     "basePrice": 420,
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -187,6 +315,7 @@
     "category": "Chinese",
     "isVeg": true,
     "basePrice": 290,
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -197,6 +326,51 @@
     "category": "Chinese",
     "isVeg": false,
     "basePrice": 850,
+    "image": "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "chi-11",
+    "name": "Veg Fried Rice",
+    "description": "Wok-tossed rice with mixed vegetables, soy sauce, and sesame oil.",
+    "ingredients": "Rice, Mixed Vegetables, Soy Sauce, Sesame Oil, Scallions",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 220,
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "chi-12",
+    "name": "Chicken Fried Rice",
+    "description": "Classic fried rice with tender chicken pieces and aromatic soy.",
+    "ingredients": "Rice, Chicken, Eggs, Soy Sauce, Spring Onions, Garlic",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 280,
+    "image": "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "chi-13",
+    "name": "Paneer Chilli",
+    "description": "Crispy paneer cubes tossed with bell peppers in a spicy soy chili sauce.",
+    "ingredients": "Paneer, Bell Peppers, Soy Sauce, Chili Sauce, Cornflour",
+    "category": "Chinese",
+    "isVeg": true,
+    "basePrice": 290,
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "chi-14",
+    "name": "Dragon Chicken",
+    "description": "Crispy fried chicken in a fiery red dragon sauce with bell peppers.",
+    "ingredients": "Chicken, Dragon Sauce, Bell Peppers, Onions, Cornflour",
+    "category": "Chinese",
+    "isVeg": false,
+    "basePrice": 380,
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -207,6 +381,7 @@
     "category": "Italian",
     "isVeg": true,
     "basePrice": 380,
+    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -217,6 +392,7 @@
     "category": "Italian",
     "isVeg": false,
     "basePrice": 490,
+    "image": "https://images.unsplash.com/photo-1619895092538-128341789043?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -227,6 +403,7 @@
     "category": "Italian",
     "isVeg": false,
     "basePrice": 440,
+    "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -237,6 +414,7 @@
     "category": "Italian",
     "isVeg": true,
     "basePrice": 420,
+    "image": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -247,6 +425,7 @@
     "category": "Italian",
     "isVeg": false,
     "basePrice": 460,
+    "image": "https://images.unsplash.com/photo-1632778149955-e80f8ceca7e8?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -257,6 +436,7 @@
     "category": "Italian",
     "isVeg": true,
     "basePrice": 350,
+    "image": "https://images.unsplash.com/photo-1621996346565-e3bb64e0be5e?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -267,6 +447,7 @@
     "category": "Italian",
     "isVeg": true,
     "basePrice": 390,
+    "image": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -277,6 +458,7 @@
     "category": "Italian",
     "isVeg": false,
     "basePrice": 650,
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -287,6 +469,7 @@
     "category": "Italian",
     "isVeg": true,
     "basePrice": 430,
+    "image": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   },
   {
@@ -297,6 +480,183 @@
     "category": "Italian",
     "isVeg": false,
     "basePrice": 580,
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ita-11",
+    "name": "Bruschetta",
+    "description": "Toasted bread topped with fresh tomatoes, basil, and balsamic glaze.",
+    "ingredients": "Ciabatta, Tomatoes, Basil, Olive Oil, Balsamic Glaze",
+    "category": "Italian",
+    "isVeg": true,
+    "basePrice": 220,
+    "image": "https://images.unsplash.com/photo-1572656631137-7935297eff55?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "ita-12",
+    "name": "Pepperoni Pizza",
+    "description": "Classic pizza loaded with spicy pepperoni and mozzarella cheese.",
+    "ingredients": "Pizza Dough, Tomato Sauce, Mozzarella, Pepperoni, Oregano",
+    "category": "Italian",
+    "isVeg": false,
+    "basePrice": 450,
+    "image": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-01",
+    "name": "Gulab Jamun",
+    "description": "Soft, melt-in-mouth milk dumplings soaked in rose-flavored sugar syrup.",
+    "ingredients": "Khoya, Maida, Cardamom, Sugar Syrup, Rose Water",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 120,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-02",
+    "name": "Rasmalai",
+    "description": "Soft chenna discs soaked in saffron and cardamom flavored thickened milk.",
+    "ingredients": "Chenna, Milk, Saffron, Cardamom, Sugar, Pistachios",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 160,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-03",
+    "name": "Jalebi",
+    "description": "Crispy, pretzel-shaped deep-fried batter soaked in saffron sugar syrup.",
+    "ingredients": "Maida, Yogurt, Saffron, Sugar Syrup, Ghee",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 100,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-04",
+    "name": "Rasgulla",
+    "description": "Light and spongy balls of cottage cheese cooked in sugar syrup.",
+    "ingredients": "Chenna, Sugar, Rose Water, Cardamom",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 110,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-05",
+    "name": "Kaju Katli",
+    "description": "Diamond-shaped cashew fudge with a delicate silver foil topping.",
+    "ingredients": "Cashews, Sugar, Ghee, Cardamom, Silver Foil",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 280,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-06",
+    "name": "Tiramisu",
+    "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone.",
+    "ingredients": "Ladyfingers, Mascarpone, Espresso, Cocoa Powder, Eggs",
+    "category": "Sweets",
+    "isVeg": false,
+    "basePrice": 350,
+    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-07",
+    "name": "Chocolate Lava Cake",
+    "description": "Warm chocolate cake with a molten gooey center, served with ice cream.",
+    "ingredients": "Dark Chocolate, Butter, Eggs, Sugar, Flour",
+    "category": "Sweets",
+    "isVeg": false,
+    "basePrice": 320,
+    "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-08",
+    "name": "Gajar Ka Halwa",
+    "description": "Slow-cooked grated carrots in milk and ghee with nuts.",
+    "ingredients": "Carrots, Milk, Ghee, Sugar, Almonds, Cashews",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 180,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-09",
+    "name": "Rabri",
+    "description": "Rich, creamy thickened sweetened milk flavored with cardamom and saffron.",
+    "ingredients": "Full Fat Milk, Sugar, Saffron, Cardamom, Pistachios",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 150,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-10",
+    "name": "Phirni",
+    "description": "Creamy ground rice pudding set in earthen pots, topped with nuts.",
+    "ingredients": "Rice, Milk, Sugar, Cardamom, Rose Water, Almonds",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 140,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-11",
+    "name": "Egg Pudding",
+    "description": "Classic caramel custard pudding made with eggs and vanilla.",
+    "ingredients": "Eggs, Milk, Sugar, Vanilla, Caramel",
+    "category": "Sweets",
+    "isVeg": false,
+    "basePrice": 180,
+    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-12",
+    "name": "Sheer Khurma",
+    "description": "Rich Eid special dessert with vermicelli, milk, dates, and nuts.",
+    "ingredients": "Vermicelli, Milk, Dates, Almonds, Pistachios, Ghee",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 200,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-13",
+    "name": "Panna Cotta",
+    "description": "Italian silky cream dessert set with gelatin and topped with berry coulis.",
+    "ingredients": "Cream, Sugar, Gelatin, Vanilla, Mixed Berries",
+    "category": "Sweets",
+    "isVeg": false,
+    "basePrice": 300,
+    "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&auto=format&fit=crop&q=60",
+    "isActive": true
+  },
+  {
+    "_id": "swt-14",
+    "name": "Kulfi Falooda",
+    "description": "Traditional Indian frozen dessert with falooda noodles and rose syrup.",
+    "ingredients": "Milk, Sugar, Cardamom, Falooda Sev, Rose Syrup, Pistachios",
+    "category": "Sweets",
+    "isVeg": true,
+    "basePrice": 160,
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60",
     "isActive": true
   }
 ]
