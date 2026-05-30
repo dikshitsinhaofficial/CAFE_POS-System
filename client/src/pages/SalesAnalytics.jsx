@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, BarChart3, TrendingUp, ShoppingBag, Receipt } from 'lucide-react';
-import axios from 'axios';
+import { getOrders } from '../data/menuData';
 
 const SalesAnalytics = () => {
   const [salesData, setSalesData] = useState({ dailySales: [], popularItems: [] });
@@ -14,15 +14,59 @@ const SalesAnalytics = () => {
     fetchSalesData();
   }, []);
 
-  const fetchSalesData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/orders/sales', {
-        params: dateRange
+  const fetchSalesData = () => {
+    const orders = getOrders();
+    const { startDate, endDate } = dateRange;
+
+    // Filter by date range
+    const filtered = orders.filter(o => {
+      const dateStr = new Date(o.orderDate).toISOString().slice(0, 10);
+      if (startDate && dateStr < startDate) return false;
+      if (endDate && dateStr > endDate) return false;
+      return true;
+    });
+
+    // Build daily sales map
+    const dailyMap = {};
+    filtered.forEach(o => {
+      const dateStr = new Date(o.orderDate).toISOString().slice(0, 10);
+      if (!dailyMap[dateStr]) {
+        dailyMap[dateStr] = { orderCount: 0, totalSales: 0 };
+      }
+      dailyMap[dateStr].orderCount += 1;
+      dailyMap[dateStr].totalSales += o.totalAmount || 0;
+    });
+
+    const dailySales = Object.keys(dailyMap)
+      .sort()
+      .map(date => ({
+        _id: { date },
+        orderCount: dailyMap[date].orderCount,
+        totalSales: dailyMap[date].totalSales,
+        averageOrderValue: dailyMap[date].totalSales / dailyMap[date].orderCount,
+      }));
+
+    // Build popular items map
+    const itemsMap = {};
+    filtered.forEach(o => {
+      (o.items || []).forEach(i => {
+        const name = i.name || 'Unknown';
+        if (!itemsMap[name]) itemsMap[name] = { totalQuantity: 0, totalRevenue: 0 };
+        const qty = i.quantity || 1;
+        itemsMap[name].totalQuantity += qty;
+        itemsMap[name].totalRevenue += qty * (i.price || 0);
       });
-      setSalesData(response.data);
-    } catch (error) {
-      console.error('Error fetching sales data:', error);
-    }
+    });
+
+    const popularItems = Object.keys(itemsMap)
+      .map(name => ({
+        _id: name,
+        totalQuantity: itemsMap[name].totalQuantity,
+        totalRevenue: itemsMap[name].totalRevenue,
+      }))
+      .sort((a, b) => b.totalQuantity - a.totalQuantity);
+
+    setSalesData({ dailySales, popularItems });
   };
 
   const totalRevenue = salesData.dailySales.reduce((sum, day) => sum + day.totalSales, 0);
@@ -54,9 +98,7 @@ const SalesAnalytics = () => {
         </h2>
         <div className="flex flex-col sm:flex-row gap-4 items-end">
           <div className="flex-1 w-full">
-            <label className="block text-xs font-semibold text-surface-500 mb-1.5 uppercase">
-              Start Date
-            </label>
+            <label className="block text-xs font-semibold text-surface-500 mb-1.5 uppercase">Start Date</label>
             <input
               type="date"
               value={dateRange.startDate}
@@ -65,9 +107,7 @@ const SalesAnalytics = () => {
             />
           </div>
           <div className="flex-1 w-full">
-            <label className="block text-xs font-semibold text-surface-500 mb-1.5 uppercase">
-              End Date
-            </label>
+            <label className="block text-xs font-semibold text-surface-500 mb-1.5 uppercase">End Date</label>
             <input
               type="date"
               value={dateRange.endDate}
@@ -97,7 +137,7 @@ const SalesAnalytics = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-surface-900 p-6 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800 flex items-center gap-4">
           <div className="p-3 bg-green-50 dark:bg-green-950/30 text-green-600 dark:text-green-400 rounded-xl">
             <ShoppingBag size={24} />
@@ -137,7 +177,7 @@ const SalesAnalytics = () => {
                   <th className="pb-3 text-left">Date</th>
                   <th className="pb-3 text-right">Orders</th>
                   <th className="pb-3 text-right">Revenue</th>
-                  <th className="pb-3 text-right">Average Order</th>
+                  <th className="pb-3 text-right">Avg Order</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-100 dark:divide-surface-800">
@@ -171,8 +211,8 @@ const SalesAnalytics = () => {
               <thead>
                 <tr className="border-b border-surface-100 dark:border-surface-800 text-surface-400 font-semibold text-left">
                   <th className="pb-3 text-left">Item Name</th>
-                  <th className="pb-3 text-right">Quantity Sold</th>
-                  <th className="pb-3 text-right">Total Revenue</th>
+                  <th className="pb-3 text-right">Qty Sold</th>
+                  <th className="pb-3 text-right">Revenue</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-100 dark:divide-surface-800">

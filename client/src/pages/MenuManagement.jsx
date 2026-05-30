@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, Leaf, Drumstick, ArrowLeft } from 'lucide-react';
+import { Plus, Trash2, Save, X, Leaf, Drumstick, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import {
+  getAllMenuItems,
+  saveCustomMenuItem,
+  deleteCustomMenuItem,
+  BASE_MENU
+} from '../data/menuData';
 
 const MenuManagement = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -16,87 +21,61 @@ const MenuManagement = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  const loadMenuItems = () => {
+    setMenuItems(getAllMenuItems());
+  };
+
   useEffect(() => {
-    fetchMenuItems();
+    loadMenuItems();
   }, []);
 
-  const fetchMenuItems = async () => {
-    try {
-      console.log('Fetching menu items...');
-      const response = await axios.get('http://localhost:5000/api/menu');
-      console.log('Menu items:', response.data);
-      setMenuItems(response.data);
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-      setMenuItems([]);
+  const handleAddItem = () => {
+    if (!newItem.name || !newItem.category || !newItem.basePrice) {
+      alert('Please fill in all required fields');
+      return;
     }
+    setLoading(true);
+
+    const item = {
+      _id: `custom-${Date.now()}`,
+      name: newItem.name,
+      description: newItem.description || '',
+      ingredients: newItem.ingredients || '',
+      category: newItem.category,
+      basePrice: parseFloat(newItem.basePrice),
+      isVeg: newItem.isVeg,
+      image: '',
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveCustomMenuItem(item);
+    loadMenuItems();
+
+    setNewItem({
+      name: '',
+      description: '',
+      ingredients: '',
+      category: 'Indian',
+      basePrice: '',
+      isVeg: true
+    });
+    setIsAddingNew(false);
+    setLoading(false);
+    alert('Item added successfully!');
   };
 
-  const handleAddItem = async () => {
-    try {
-      setLoading(true);
-      console.log('Adding item:', newItem);
-
-      // Simple validation
-      if (!newItem.name || !newItem.category || !newItem.basePrice) {
-        alert('Please fill in all required fields');
-        return;
-      }
-
-      const itemData = {
-        name: newItem.name,
-        description: newItem.description,
-        ingredients: newItem.ingredients,
-        category: newItem.category,
-        basePrice: newItem.basePrice,
-        isVeg: newItem.isVeg
-      };
-
-      console.log('Sending to server:', itemData);
-      
-      const response = await axios.post('http://localhost:5000/api/menu', itemData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      console.log('Server response:', response.data);
-      
-      // Reset form
-      setNewItem({
-        name: '',
-        description: '',
-        ingredients: '',
-        category: 'Indian',
-        basePrice: '',
-        isVeg: true
-      });
-      setIsAddingNew(false);
-      
-      // Refresh menu
-      await fetchMenuItems();
-      
-      alert('Item added successfully!');
-      
-    } catch (error) {
-      console.error('Full error:', error);
-      console.error('Error response:', error.response);
-      alert('Error: ' + (error.response?.data?.message || error.message));
-    } finally {
-      setLoading(false);
+  const handleDeleteItem = (id) => {
+    // Only allow deleting custom items (not base menu items)
+    const isBaseItem = BASE_MENU.some(i => i._id === id);
+    if (isBaseItem) {
+      alert('Base menu items cannot be deleted. You can only delete items you added.');
+      return;
     }
-  };
-
-  const handleDeleteItem = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      try {
-        await axios.delete(`http://localhost:5000/api/menu/${id}`);
-        await fetchMenuItems();
-        alert('Item deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting item:', error);
-        alert('Error deleting menu item');
-      }
+      deleteCustomMenuItem(id);
+      loadMenuItems();
+      alert('Item deleted successfully!');
     }
   };
 
@@ -256,38 +235,48 @@ const MenuManagement = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {menuItems.map(item => (
-            <div key={item._id} className="bg-white dark:bg-surface-900 rounded-2xl shadow-sm p-4 border border-surface-100 dark:border-surface-800 hover:shadow-lg transition-all">
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center gap-2">
-                  <div className={`p-1 rounded-md border ${item.isVeg ? 'border-green-500' : 'border-red-500'}`}>
-                    <div className={`w-2 h-2 rounded-full ${item.isVeg ? 'bg-green-500' : 'bg-red-500'}`} />
+          {menuItems.map(item => {
+            const isCustom = !BASE_MENU.some(b => b._id === item._id);
+            return (
+              <div key={item._id} className="bg-white dark:bg-surface-900 rounded-2xl shadow-sm p-4 border border-surface-100 dark:border-surface-800 hover:shadow-lg transition-all">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`p-1 rounded-md border ${item.isVeg ? 'border-green-500' : 'border-red-500'}`}>
+                      <div className={`w-2 h-2 rounded-full ${item.isVeg ? 'bg-green-500' : 'bg-red-500'}`} />
+                    </div>
+                    <h3 className="font-semibold text-lg text-surface-800 dark:text-white">{item.name}</h3>
+                    {isCustom && (
+                      <span className="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold">Custom</span>
+                    )}
                   </div>
-                  <h3 className="font-semibold text-lg text-surface-800 dark:text-white">{item.name}</h3>
+                  <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 text-xs px-2 py-1 rounded-full">
+                    {item.category}
+                  </span>
                 </div>
-                <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 text-xs px-2 py-1 rounded-full">
-                  {item.category}
-                </span>
+                <p className="text-surface-600 dark:text-surface-400 text-sm mb-1">{item.description}</p>
+                {item.ingredients && (
+                  <p className="text-surface-400 text-xs italic mb-3">{item.ingredients}</p>
+                )}
+
+                <div className="flex justify-between items-center pt-2 border-t border-surface-100 dark:border-surface-800">
+                  <span className="text-primary-600 dark:text-primary-400 font-bold text-lg">
+                    ₹{item.basePrice?.toFixed(0)}
+                  </span>
+                  {isCustom ? (
+                    <button
+                      onClick={() => handleDeleteItem(item._id)}
+                      className="bg-red-600 text-white py-2 px-3 rounded-xl hover:bg-red-700 transition-all flex items-center space-x-1"
+                    >
+                      <Trash2 size={16} />
+                      <span>Delete</span>
+                    </button>
+                  ) : (
+                    <span className="text-xs text-surface-400 italic">Base menu item</span>
+                  )}
+                </div>
               </div>
-              <p className="text-surface-600 dark:text-surface-400 text-sm mb-1">{item.description}</p>
-              {item.ingredients && (
-                <p className="text-surface-400 text-xs italic mb-3">{item.ingredients}</p>
-              )}
-              
-              <div className="flex justify-between items-center pt-2 border-t border-surface-100 dark:border-surface-800">
-                <span className="text-primary-600 dark:text-primary-400 font-bold text-lg">
-                  ₹{item.basePrice?.toFixed(0)}
-                </span>
-                <button
-                  onClick={() => handleDeleteItem(item._id)}
-                  className="bg-red-600 text-white py-2 px-3 rounded-xl hover:bg-red-700 transition-all flex items-center space-x-1"
-                >
-                  <Trash2 size={16} />
-                  <span>Delete</span>
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

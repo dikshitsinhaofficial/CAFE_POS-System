@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Minus, Trash2, Printer, ShoppingCart, Leaf, Drumstick, Search, X, Wallet, CreditCard, Banknote } from 'lucide-react';
-import axios from 'axios';
+import { getAllMenuItems, getCategories, saveOrder } from '../data/menuData';
 
 const POS = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -11,46 +11,38 @@ const POS = () => {
   const [cart, setCart] = useState([]);
   const [customer, setCustomer] = useState({ name: '', mobile: '', address: '' });
   const [paymentType, setPaymentType] = useState('cod');
-  const [serviceType, setServiceType] = useState('dine-in');
   const [activeTab, setActiveTab] = useState('menu'); // 'menu' or 'cart' on mobile
 
+  // Load menu from embedded data (no backend needed)
   useEffect(() => {
-    fetchMenuItems();
-    fetchCategories();
+    setMenuItems(getAllMenuItems());
+    setCategories(getCategories());
   }, []);
 
-  const fetchMenuItems = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/menu');
-      setMenuItems(response.data);
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/menu/categories');
-      setCategories(response.data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
+  // Re-sync whenever the tab gets focus (picks up Menu Management changes)
+  useEffect(() => {
+    const onFocus = () => {
+      setMenuItems(getAllMenuItems());
+      setCategories(getCategories());
+    };
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, []);
 
   const filteredItems = menuItems.filter(item => {
-    const categoryMatch = 
-      selectedCategory === 'all' || 
-      item.category === selectedCategory || 
+    const categoryMatch =
+      selectedCategory === 'all' ||
+      item.category === selectedCategory ||
       (searchQuery.trim() !== '' && (
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase())
       ));
-    const dietaryMatch = 
-      dietaryFilter === 'all' || 
-      (dietaryFilter === 'veg' && item.isVeg) || 
+    const dietaryMatch =
+      dietaryFilter === 'all' ||
+      (dietaryFilter === 'veg' && item.isVeg) ||
       (dietaryFilter === 'non-veg' && !item.isVeg);
-    const searchMatch = 
-      searchQuery.trim() === '' || 
+    const searchMatch =
+      searchQuery.trim() === '' ||
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.ingredients.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -83,15 +75,15 @@ const POS = () => {
   };
 
   const updateQuantity = (id, change) => {
-    setCart(prevCart => {
-      return prevCart
+    setCart(prevCart =>
+      prevCart
         .map(item =>
           item.id === id
             ? { ...item, quantity: Math.max(0, item.quantity + change) }
             : item
         )
-        .filter(item => item.quantity > 0);
-    });
+        .filter(item => item.quantity > 0)
+    );
   };
 
   const removeFromCart = (id) => {
@@ -99,43 +91,35 @@ const POS = () => {
   };
 
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-  // Calculate delivery charge if less than 600 (only when cart has items)
   const deliveryCharge = (cart.length > 0 && subtotal < 600) ? 40 : 0;
-  const tax = subtotal * 0.05; // 5% GST
+  const tax = subtotal * 0.05;
   const total = subtotal + tax + deliveryCharge;
 
-  const processOrder = async () => {
+  const processOrder = () => {
     if (cart.length === 0) return;
     if (!customer.name || !customer.mobile || !customer.address) {
       alert('Please fill in Customer Name, Phone, and Address.');
       return;
     }
-    try {
-      const orderData = {
-        items: cart,
-        customer,
-        paymentType,
-        subtotal,
-        tax,
-        deliveryCharge,
-        total,
-        orderDate: new Date()
-      };
 
-      await axios.post('http://localhost:5000/api/orders', orderData);
-      printReceipt();
-      setCart([]);
-      setCustomer({ name: '', mobile: '', address: '' });
-      alert('Order processed successfully!');
-    } catch (error) {
-      console.error('Error processing order:', error);
-      alert('Error processing order');
-    }
+    saveOrder({
+      items: cart,
+      customer,
+      paymentType,
+      subtotal,
+      tax,
+      deliveryCharge,
+      totalAmount: total,
+    });
+
+    printReceipt();
+    setCart([]);
+    setCustomer({ name: '', mobile: '', address: '' });
+    alert('Order processed successfully!');
   };
 
   const getPaymentLabel = (type) => {
-    switch(type) {
+    switch (type) {
       case 'wallet': return 'Wallet';
       case 'razorpay': return 'Razorpay Online (UPI/Card)';
       case 'cod': return 'Cash on Delivery (COD)';
@@ -197,7 +181,6 @@ const POS = () => {
     { id: 'cod', label: 'COD', sublabel: 'Cash on Delivery', icon: Banknote, color: 'text-green-500' }
   ];
 
-  // Helper to get item count in cart
   const getItemQtyInCart = (itemId) => {
     const found = cart.find(c => c.id === itemId);
     return found ? found.quantity : 0;
@@ -207,167 +190,164 @@ const POS = () => {
     <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)] w-full pb-20 lg:pb-0 relative overflow-hidden">
       {/* Left Group (Sidebar + Menu Grid) */}
       <div className={`${activeTab === 'menu' ? 'flex' : 'hidden lg:flex'} flex-col md:flex-row gap-6 flex-1 min-w-0 h-full overflow-hidden`}>
-        {/* Sidebar - Filters (Shifted to left side) */}
+        {/* Sidebar - Filters */}
         <div className="w-full md:w-64 lg:w-80 flex flex-col gap-5 flex-shrink-0 overflow-y-auto lg:overflow-y-visible max-h-[35vh] md:max-h-none">
-        {/* Search Input - Shifted to the top of the left sidebar */}
-        <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800">
-          <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400" />
-            <input
-              type="text"
-              placeholder="Search menu... (e.g. biryani)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 bg-surface-50 dark:bg-surface-800 border-none rounded-xl focus:ring-2 focus:ring-primary-500 text-sm outline-none transition-all"
-            />
+          {/* Search Input */}
+          <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800">
+            <div className="relative">
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400" />
+              <input
+                type="text"
+                placeholder="Search menu... (e.g. biryani)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-10 py-3 bg-surface-50 dark:bg-surface-800 border-none rounded-xl focus:ring-2 focus:ring-primary-500 text-sm outline-none transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
             {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 transition-colors"
-              >
-                <X size={16} />
-              </button>
+              <p className="text-xs text-surface-400 mt-2 px-1">
+                {filteredItems.length} result{filteredItems.length !== 1 ? 's' : ''} for "<span className="text-primary-600 dark:text-primary-400 font-semibold">{searchQuery}</span>"
+              </p>
             )}
           </div>
-          {searchQuery && (
-            <p className="text-xs text-surface-400 mt-2 px-1">
-              {filteredItems.length} result{filteredItems.length !== 1 ? 's' : ''} for "<span className="text-primary-600 dark:text-primary-400 font-semibold">{searchQuery}</span>"
-            </p>
-          )}
-        </div>
 
-        {/* Dietary Filters */}
-        <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800">
-          <h2 className="text-xs font-bold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-3">Dietary preference</h2>
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { id: 'all', label: 'All', icon: null },
-              { id: 'veg', label: 'Veg', icon: Leaf, color: 'text-green-500' },
-              { id: 'non-veg', label: 'Non-Veg', icon: Drumstick, color: 'text-red-500' }
-            ].map(type => (
-              <button
-                key={type.id}
-                onClick={() => setDietaryFilter(type.id)}
-                className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all border-2 ${
-                  dietaryFilter === type.id 
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' 
-                    : 'border-transparent bg-surface-50 dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700'
-                }`}
-              >
-                {type.icon && <type.icon size={16} className={type.color} />}
-                <span className={`text-[11px] font-semibold mt-1 ${dietaryFilter === type.id ? 'text-primary-700 dark:text-primary-400' : 'text-surface-600 dark:text-surface-400'}`}>
-                  {type.label}
-                </span>
-              </button>
-            ))}
+          {/* Dietary Filters */}
+          <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800">
+            <h2 className="text-xs font-bold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-3">Dietary preference</h2>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { id: 'all', label: 'All', icon: null },
+                { id: 'veg', label: 'Veg', icon: Leaf, color: 'text-green-500' },
+                { id: 'non-veg', label: 'Non-Veg', icon: Drumstick, color: 'text-red-500' }
+              ].map(type => (
+                <button
+                  key={type.id}
+                  onClick={() => setDietaryFilter(type.id)}
+                  className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all border-2 ${
+                    dietaryFilter === type.id
+                      ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                      : 'border-transparent bg-surface-50 dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700'
+                  }`}
+                >
+                  {type.icon && <type.icon size={16} className={type.color} />}
+                  <span className={`text-[11px] font-semibold mt-1 ${dietaryFilter === type.id ? 'text-primary-700 dark:text-primary-400' : 'text-surface-600 dark:text-surface-400'}`}>
+                    {type.label}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Categories */}
-        <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800 flex-1 lg:overflow-y-auto min-h-0 lg:min-h-[250px]">
-          <h2 className="text-xs font-bold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-3">Cuisines</h2>
-          <div className="flex lg:flex-col flex-row gap-1.5 overflow-x-auto lg:overflow-x-visible pb-1">
-            <button
-              className={`whitespace-nowrap px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${
-                selectedCategory === 'all' 
-                  ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30' 
-                  : 'text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-800'
-              }`}
-              onClick={() => setSelectedCategory('all')}
-            >
-              All Cuisines
-            </button>
-            {categories.map(category => (
+          {/* Categories */}
+          <div className="bg-white dark:bg-surface-900 p-4 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800 flex-1 lg:overflow-y-auto min-h-0 lg:min-h-[250px]">
+            <h2 className="text-xs font-bold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-3">Cuisines</h2>
+            <div className="flex lg:flex-col flex-row gap-1.5 overflow-x-auto lg:overflow-x-visible pb-1">
               <button
-                key={category}
                 className={`whitespace-nowrap px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${
-                  selectedCategory === category 
-                    ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30' 
+                  selectedCategory === 'all'
+                    ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
                     : 'text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-800'
                 }`}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => setSelectedCategory('all')}
               >
-                {category}
+                All Cuisines
               </button>
-            ))}
+              {categories.map(category => (
+                <button
+                  key={category}
+                  className={`whitespace-nowrap px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${
+                    selectedCategory === category
+                      ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
+                      : 'text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-800'
+                  }`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Main Menu Grid */}
+        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {filteredItems.map(item => {
+              const qty = getItemQtyInCart(item._id);
+              return (
+                <div
+                  key={item._id}
+                  onClick={() => addToCart(item)}
+                  className="group bg-white dark:bg-surface-900 rounded-2xl overflow-hidden border border-surface-100 dark:border-surface-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col relative"
+                >
+                  {qty > 0 && (
+                    <div className="absolute top-2 right-2 z-10 bg-primary-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-full shadow-lg border border-white">
+                      Added: {qty}
+                    </div>
+                  )}
+
+                  <div className="relative h-40 w-full bg-surface-100 dark:bg-surface-800 overflow-hidden">
+                    <img
+                      src={item.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60"}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-center items-center text-white">
+                      <span className="text-sm font-black tracking-wider uppercase">
+                        {qty > 0 ? `Currently in cart: ${qty}` : 'Click to add to cart'}
+                      </span>
+                      {qty > 0 && <span className="text-xs text-white/80 mt-1">Total: ₹{(qty * item.basePrice).toFixed(0)}</span>}
+                    </div>
+
+                    <div className="absolute top-3 left-3 bg-white/95 dark:bg-surface-900/95 p-1.5 rounded-lg shadow-md border dark:border-surface-800">
+                      <div className={`p-0.5 rounded-sm border ${item.isVeg ? 'border-green-500' : 'border-red-500'}`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${item.isVeg ? 'bg-green-500' : 'bg-red-500'}`} />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-3 right-3 bg-primary-600 text-white px-2.5 py-1 rounded-lg text-sm font-bold shadow-md">
+                      ₹{item.basePrice}
+                    </div>
+                  </div>
+
+                  <div className="p-4 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-base font-bold mb-1 text-surface-900 dark:text-white group-hover:text-primary-600 transition-colors line-clamp-1">
+                        {item.name}
+                      </h3>
+                      <p className="text-xs text-surface-500 dark:text-surface-400 line-clamp-2 mb-3">
+                        {item.description}
+                      </p>
+                    </div>
+                    <div className="pt-2.5 border-t border-surface-50 dark:border-surface-800">
+                      <p className="text-[9px] font-bold text-surface-400 uppercase tracking-tighter mb-0.5">Ingredients</p>
+                      <p className="text-xs text-surface-600 dark:text-surface-300 italic line-clamp-1">
+                        {item.ingredients}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            {filteredItems.length === 0 && (
+              <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-40">
+                <Search size={48} />
+                <p className="mt-4 font-bold text-lg">No items found</p>
+                <p className="text-sm mt-1">Try a different search or filter</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Main Grid (Middle/Center Grid) */}
-      <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filteredItems.map(item => {
-            const qty = getItemQtyInCart(item._id);
-            return (
-              <div
-                key={item._id}
-                onClick={() => addToCart(item)}
-                className="group bg-white dark:bg-surface-900 rounded-2xl overflow-hidden border border-surface-100 dark:border-surface-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col relative"
-              >
-                {/* Hover quantity overlay */}
-                {qty > 0 && (
-                  <div className="absolute top-2 right-2 z-10 bg-primary-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-full shadow-lg border border-white">
-                    Added: {qty}
-                  </div>
-                )}
-                
-                {/* Product Image */}
-                <div className="relative h-40 w-full bg-surface-100 dark:bg-surface-800 overflow-hidden">
-                  <img 
-                    src={item.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60"} 
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  {/* Subtle info on hover showing added quantity info */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-center items-center text-white">
-                    <span className="text-sm font-black tracking-wider uppercase">
-                      {qty > 0 ? `Currently in cart: ${qty}` : 'Click to add to cart'}
-                    </span>
-                    {qty > 0 && <span className="text-xs text-white/80 mt-1">Total: ₹{(qty * item.basePrice).toFixed(0)}</span>}
-                  </div>
-
-                  <div className="absolute top-3 left-3 bg-white/95 dark:bg-surface-900/95 p-1.5 rounded-lg shadow-md border dark:border-surface-800">
-                    <div className={`p-0.5 rounded-sm border ${item.isVeg ? 'border-green-500' : 'border-red-500'}`}>
-                      <div className={`w-1.5 h-1.5 rounded-full ${item.isVeg ? 'bg-green-500' : 'bg-red-500'}`} />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-3 right-3 bg-primary-600 text-white px-2.5 py-1 rounded-lg text-sm font-bold shadow-md">
-                    ₹{item.basePrice}
-                  </div>
-                </div>
-
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-base font-bold mb-1 text-surface-900 dark:text-white group-hover:text-primary-600 transition-colors line-clamp-1">
-                      {item.name}
-                    </h3>
-                    <p className="text-xs text-surface-500 dark:text-surface-400 line-clamp-2 mb-3">
-                      {item.description}
-                    </p>
-                  </div>
-                  <div className="pt-2.5 border-t border-surface-50 dark:border-surface-800">
-                    <p className="text-[9px] font-bold text-surface-400 uppercase tracking-tighter mb-0.5">Ingredients</p>
-                    <p className="text-xs text-surface-600 dark:text-surface-300 italic line-clamp-1">
-                      {item.ingredients}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          {filteredItems.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-40">
-              <Search size={48} />
-              <p className="mt-4 font-bold text-lg">No items found</p>
-              <p className="text-sm mt-1">Try a different search or filter</p>
-            </div>
-          )}
-        </div>
-      </div>
-      </div>
-
-      {/* Order Panel (Shifted to the right side) */}
+      {/* Order Panel */}
       <div className={`${activeTab === 'cart' ? 'flex' : 'hidden lg:flex'} w-full lg:w-[380px] flex-col gap-4 flex-shrink-0 h-full overflow-hidden`}>
         <div className="bg-white dark:bg-surface-900 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-800 flex flex-col h-full overflow-hidden">
           <div className="p-5 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between">
