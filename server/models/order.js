@@ -1,7 +1,7 @@
-// /backend/models/Order.js
 import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema({
+  _id: { type: String },
   name: String,
   category: String,
   quantity: Number,
@@ -10,11 +10,15 @@ const orderItemSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
+  orderNumber: { type: String, required: true },
   customerName: { type: String },
   customerNumber: { type: String },
   items: [orderItemSchema],
-  total: { type: Number, required: true },
-  paymentMethod: { type: String, default: "Cash" },
+  totalAmount: { type: Number, required: true },
+  subtotal: { type: Number, default: 0 },
+  tax: { type: Number, default: 0 },
+  paymentType: { type: String, default: "cod" },
+  serviceType: { type: String, default: "dine-in" },
   status: { type: String, default: "completed" },
   orderDate: { type: Date, default: Date.now },
 });
